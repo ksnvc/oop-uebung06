@@ -102,6 +102,21 @@ class Liste<T> {
 	 * Zusatzaufgabe: Wie `toString`, nur rekursiv zu implementieren.
 	 */
 	String toStringRek() {
-		throw new UnsupportedOperationException();
+		if(first == null)
+			return "[]";
+
+		StringBuilder sb = new StringBuilder();
+		sb.append("[");
+		return toStringRek(first,sb);
+	}
+
+	String toStringRek(Element it, StringBuilder sb){
+		if(it.next == null)
+			return sb.append(it.value).toString()+"]";
+		else {
+			sb.append(it.value).append(", ");
+			return toStringRek(it.next,sb);
+		}
+
 	}
 }

@@ -6,7 +6,10 @@ class Baum<T extends Comparable<T>> {
 	private class Element {
 		T value;
 		Element left, right;
-		Element(T value) { this.value = value; }
+
+		Element(T value) {
+			this.value = value;
+		}
 	}
 
 	private Element root;
@@ -45,33 +48,31 @@ class Baum<T extends Comparable<T>> {
 	}
 
 	/**
-	 *  Wie `add`, aber rekursiv zu implementieren.
+	 * Wie `add`, aber rekursiv zu implementieren.
 	 */
 	void addRek(T value) {
-		if( root == null) {
+		if (root == null) {
 			root = new Element(value);
 			return;
-		}
-		else addRek(root, value);
+		} else addRek(root, value);
 	}
 
 
-	void addRek(Element it, T value){
+	void addRek(Element it, T value) {
 		int c = value.compareTo(it.value);
-		if(c == 0)
+		if (c == 0)
 			return;
-		else if(c<0) {
-			if(it.left == null)
-			it.left= new Element(value);
+		else if (c < 0) {
+			if (it.left == null)
+				it.left = new Element(value);
 
 			else addRek(it.left, value);
-		}
-		else if(it.right == null)
+		} else if (it.right == null)
 			it.right = new Element(value);
 
 		else
-		    addRek(it.right, value);
-		}
+			addRek(it.right, value);
+	}
 
 
 	/**
@@ -99,7 +100,7 @@ class Baum<T extends Comparable<T>> {
 	 * Wie `contains`, aber rekursiv zu implementieren.
 	 */
 	boolean containsRek(T value) {
-		if(root == null)
+		if (root == null)
 			return false;
 		else
 			return containsRek(root, value);
@@ -107,17 +108,17 @@ class Baum<T extends Comparable<T>> {
 
 	boolean containsRek(Element it, T value) {
 		int c = value.compareTo(it.value);
-		if(c==0)
+		if (c == 0)
 			return true;
-		else if(c<0)
-			if(it.left == null)
+		else if (c < 0)
+			if (it.left == null)
 				return false;
 			else
-			return(containsRek(it.left,value));
-			if(it.right == null)
-				return false;
+				return (containsRek(it.left, value));
+		if (it.right == null)
+			return false;
 		else
-			return(containsRek(it.right, value));
+			return (containsRek(it.right, value));
 	}
 
 
@@ -158,10 +159,42 @@ class Baum<T extends Comparable<T>> {
 		return "[" + sb.toString() + "]";
 	}
 
-	/**
-	 * Zusatzaufgabe: Wie `toString`, nur rekursiv zu implementieren.
-	 */
 	String toStringRek() {
-		throw new UnsupportedOperationException();
+		if (root == null)
+			return "[]";
+
+		else
+			return "[" + toStringRek(root) + "]";
+
+	}
+
+	String toStringRek(Element it) {
+		Stack<Element> agenda = new Stack<>();
+
+		while (it != null) {
+			agenda.push(it);
+			it = it.left;
+		}
+
+		StringBuilder str = new StringBuilder();
+
+		while (!agenda.empty()) {
+			Element e = agenda.pop();
+			str.append(e.value);
+
+			it = e.right;
+			if (it != null) {
+				agenda.push(it);
+				it = it.left;
+			}
+				if (agenda.size() > 0)
+					str.append(", ");
+
+
+
+		}
+		return str.toString();
+
+
 	}
 }
