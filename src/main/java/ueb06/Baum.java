@@ -3,6 +3,7 @@ package ueb06;
 import java.util.Stack;
 
 class Baum<T extends Comparable<T>> {
+
 	private class Element {
 		T value;
 		Element left, right;
